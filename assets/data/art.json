@@ -1,0 +1,17 @@
+[
+  {
+    "name": "유명한 그림",
+    "has_fake": true,
+    "fake_tips": "가품은 귀걸이가 별 모양이 아님"
+  },
+  {
+    "name": "진귀한 조각",
+    "has_fake": true,
+    "fake_tips": "가품은 왼손이 들려 있음"
+  },
+  {
+    "name": "아름다운 조각",
+    "has_fake": false,
+    "fake_tips": ""
+  }
+]

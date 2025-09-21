@@ -1,0 +1,30 @@
+[
+  {
+    "name": "레이먼드",
+    "gender": "남성",
+    "personality": "느끼함",
+    "species": "고양이",
+    "birthday": "10-01"
+  },
+  {
+    "name": "주디",
+    "gender": "여성",
+    "personality": "아이돌",
+    "species": "곰",
+    "birthday": "03-10"
+  },
+  {
+    "name": "비앙카",
+    "gender": "여성",
+    "personality": "성숙함",
+    "species": "늑대",
+    "birthday": "09-17"
+  },
+  {
+    "name": "잭슨",
+    "gender": "남성",
+    "personality": "운동광",
+    "species": "고양이",
+    "birthday": "09-21"
+  }
+]

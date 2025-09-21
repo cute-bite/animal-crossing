@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title }} | 동물의 숲 한국 팬 위키</title>
+    <link rel="stylesheet" href="/assets/css/theme.css">
+    <script defer src="/assets/js/ui.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#content">본문 바로가기</a>
+    {% include header.html %}
+    <div class="layout">
+      {% include sidebar.html %}
+      <main id="content" class="content">
+        {{ content }}
+      </main>
+    </div>
+    {% include footer.html %}
+  </body>
+</html>
