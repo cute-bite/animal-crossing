@@ -4,8 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page.title }} | 동물의 숲 한국 팬 위키</title>
-    <link rel="stylesheet" href="/assets/css/theme.css">
-    <script defer src="/assets/js/ui.js"></script>
+
+    <!-- CSS/JS는 반드시 relative_url 사용 -->
+    <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+    <script>window.SITE_BASE = "{{ '' | relative_url }}";</script>
+    <script defer src="{{ '/assets/js/ui.js' | relative_url }}"></script>
+
+    {%- if site.url -%}
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+    {%- endif -%}
   </head>
   <body>
     <a class="skip" href="#content">본문 바로가기</a>

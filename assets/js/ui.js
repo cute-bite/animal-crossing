@@ -3,30 +3,27 @@
   const sidebar = document.getElementById('sidebar');
   const themeBtn = document.querySelector('.theme-toggle');
 
-  navBtn?.addEventListener('click', () => {
+  navBtn?.addEventListener('click', ()=>{
     const open = sidebar.classList.toggle('open');
     navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 
-  // theme toggle
+  // 다크모드 토글
   const KEY='acnh_theme';
   function setTheme(mode){
-    if (mode === 'dark'){ document.documentElement.classList.add('dark'); }
-    else { document.documentElement.classList.remove('dark'); }
+    if(mode==='dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
     localStorage.setItem(KEY, mode);
   }
-  const saved = localStorage.getItem(KEY);
-  if (saved) setTheme(saved);
-  themeBtn?.addEventListener('click', () => {
-    const curr = localStorage.getItem(KEY) === 'dark' ? 'light' : 'dark';
-    setTheme(curr);
-  });
+  const saved=localStorage.getItem(KEY);
+  if(saved) setTheme(saved);
+  themeBtn?.addEventListener('click', ()=> setTheme(localStorage.getItem(KEY)==='dark'?'light':'dark'));
 
-  // active link highlight
+  // 현재 경로 하이라이트
   const here = location.pathname.replace(/\/+$/, '');
-  document.querySelectorAll('.sidebar a[href]').forEach(a => {
-    const href = a.getAttribute('href').replace(/\/+$/, '');
-    if (href && href !== '/' && here.startsWith(href)) a.classList.add('active');
-    if (here === '/' && href === '/') a.classList.add('active');
+  document.querySelectorAll('.sidebar a[href]').forEach(a=>{
+    const href=a.getAttribute('href').replace(/\/+$/,'');
+    if(here === '/' && href === '{{ site.baseurl }}') a.classList.add('active');
+    if(here.startsWith(href) && href !== '{{ site.baseurl }}') a.classList.add('active');
   });
 })();

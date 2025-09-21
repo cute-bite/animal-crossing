@@ -1,0 +1,6 @@
+title: ACNH Korean Fan Wiki
+url: https://cute-bite.github.io/animal-crossing/        # 너의 사용자 페이지 주소
+baseurl: /animal-crossing               # 너의 저장소 이름(앞에 / 붙임)
+
+plugins:
+  - jekyll-sitemap

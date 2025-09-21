@@ -9,26 +9,24 @@ title: 홈
 > 이 정보는 Nookipedia(CC BY-SA) 기반으로 한국어 번역·재구성되었습니다.  
 > Nintendo와는 무관한 **팬 메이드 프로젝트**입니다.
 
-{% include hero.html %}
-
----
-
-## 🎂 오늘의 주민 생일
-<div id="birthday-card" class="birthday card">불러오는 중…</div>
-
----
-
-## 🎉 이달의 이벤트
-<div id="events-card" class="card">불러오는 중…</div>
-
----
-
-## 🐟 이번 달 출현 생물
-<div class="card" id="hemisphere-controls" aria-label="반구 선택" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-  <strong>반구:</strong>
-  <button type="button" class="chip" data-hem="n" aria-pressed="true">북반구</button>
-  <button type="button" class="chip" data-hem="s" aria-pressed="false">남반구</button>
+<div class="hero-grid">
+  <a class="card hero" href="{{ '/games/' | relative_url }}"><h3>게임</h3></a>
+  <a class="card hero" href="{{ '/nh/'    | relative_url }}"><h3>모여봐요 동물의 숲</h3></a>
+  <a class="card hero" href="{{ '/villagers/' | relative_url }}"><h3>주민</h3></a>
+  <a class="card hero" href="{{ '/npc/' | relative_url }}"><h3>특별 캐릭터</h3></a>
+  <a class="card hero" href="{{ '/fish/' | relative_url }}"><h3>물고기</h3></a>
+  <a class="card hero" href="{{ '/bugs/' | relative_url }}"><h3>곤충</h3></a>
+  <a class="card hero" href="{{ '/sea/'  | relative_url }}"><h3>해산물</h3></a>
+  <a class="card hero" href="{{ '/fossils/' | relative_url }}"><h3>화석</h3></a>
+  <a class="card hero" href="{{ '/art/' | relative_url }}"><h3>미술</h3></a>
+  <a class="card hero" href="{{ '/gyroids/' | relative_url }}"><h3>하늘둥둥이</h3></a>
+  <a class="card hero" href="{{ '/locations/' | relative_url }}"><h3>장소 & 시스템</h3></a>
+  <a class="card hero" href="{{ '/events/' | relative_url }}"><h3>이벤트 & 시즌</h3></a>
+  <a class="card hero" href="{{ '/furniture/' | relative_url }}"><h3>가구</h3></a>
+  <a class="card hero" href="{{ '/clothing/' | relative_url }}"><h3>의류</h3></a>
+  <a class="card hero" href="{{ '/tools/' | relative_url }}"><h3>도구</h3></a>
+  <a class="card hero" href="{{ '/recipes/' | relative_url }}"><h3>DIY & 요리</h3></a>
+  <a class="card hero" href="{{ '/music/' | relative_url }}"><h3>음악</h3></a>
+  <a class="card hero" href="{{ '/community/' | relative_url }}"><h3>커뮤니티 & 위키</h3></a>
+  <a class="card hero" href="{{ '/misc/' | relative_url }}"><h3>기타 요소</h3></a>
 </div>
-<div id="critters-card" class="card">불러오는 중…</div>
-
-<script defer src="/assets/js/home-dynamic.js"></script>
