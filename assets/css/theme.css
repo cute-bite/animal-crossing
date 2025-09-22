@@ -372,3 +372,34 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
     border-color: #2d3a4a;
   }
 }
+
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .sidebar {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+    padding: 6px !important;
+  }
+
+  .sidebar h3 {
+    font-size: 13px !important;
+    padding: 4px 8px !important;
+    margin: 8px 0 4px !important;
+  }
+
+  .sidebar h3 + ul {
+    padding: 6px 8px !important;
+    border-radius: 10px !important;
+  }
+
+  .sidebar .species-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 4px !important;
+  }
+
+  .sidebar ul li a {
+    font-size: 12.5px !important;
+    padding: 2px 4px !important;
+  }
+}
