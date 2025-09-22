@@ -208,3 +208,65 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar::-webkit-scrollbar{ width:10px; }
 .sidebar::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.15); border-radius:8px; }
 .sidebar::-webkit-scrollbar-track{ background:transparent; }
+
+/* 전체 사이드바 (위키 느낌) */
+.sidebar {
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
+  color: #333;
+}
+
+/* 섹션 제목 */
+.sidebar h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 0 6px;
+  padding-left: 6px;
+  border-left: 3px solid #8cbf75; /* 파스텔 그린 강조선 */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 제목 앞 아이콘 스타일 */
+.sidebar h3::before {
+  content: "📌";   /* 원하는 이모지나 아이콘 */
+  font-size: 13px;
+  margin-right: 4px;
+  opacity: 0.8;
+}
+
+/* 리스트 항목 */
+.sidebar ul {
+  margin: 2px 0 6px 16px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  margin: 2px 0;
+  position: relative;
+  padding-left: 12px;
+}
+
+/* 불릿 대신 작은 네모 */
+.sidebar ul li::before {
+  content: "▪";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 11px;
+  color: #999;
+}
+
+/* 링크 */
+.sidebar ul li a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #333;
+}
+.sidebar ul li a:hover {
+  color: #0077cc;   /* 살짝 푸른색 */
+  text-decoration: underline;
+}
