@@ -535,3 +535,16 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   padding: 8px 12px;
   box-sizing: border-box;
 }
+
+/* 모바일에서 검색창 폭 줄이기 */
+@media (max-width: 768px) {
+  .site-header .search-box {
+    max-width: 140px;  /* 원하는 크기로 조정 */
+    flex-shrink: 1;    /* 공간 부족하면 줄어들도록 */
+  }
+
+  /* 로고 텍스트는 줄바꿈 금지 */
+  .site-header .brand {
+    white-space: nowrap;
+  }
+}
