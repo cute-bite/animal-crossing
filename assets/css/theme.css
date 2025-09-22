@@ -403,3 +403,41 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
     padding: 2px 4px !important;
   }
 }
+
+/* ===== [패치] 홈=집모양, 발바닥 제거, 정렬 보정 ===== */
+
+/* 0) 혹시 예전 규칙이 아이콘을 덮어쓰면 우선권 확보 */
+.sidebar * { box-sizing: border-box; }
+
+/* 1) 홈(HOME) 뱃지: 집 아이콘 붙이기
+   - HTML을 안 건드려도 동작하도록, 메뉴 맨 처음 <ul> 안의 h3만 집 아이콘 */
+.sidebar .menu > ul li h3::before {
+  content: "🏠";
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+/* 2) 목록 앞 발바닥(또는 커스텀 불릿) 전부 제거 */
+.sidebar ul li::before { content: none !important; }
+
+/* 3) 불릿 제거했으니 좌측 들여쓰기 정리(겹침 방지) */
+.sidebar ul > li { padding-left: 0 !important; }
+.sidebar ul ul > li { padding-left: 12px !important; }
+.sidebar ul ul ul > li { padding-left: 12px !important; }
+
+/* 4) 링크는 깔끔하게—칩 느낌 유지 */
+.sidebar ul li a {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--cute-text, #334);
+  transition: background-color .16s ease, transform .12s ease;
+}
+.sidebar ul li a:hover {
+  background: var(--cute-hover, #ffedf6);
+  transform: translateX(2px);
+}
+
+/* 5) species-grid(종류별 칩)는 기존 스타일 유지 */
+.sidebar .species-grid li { padding-left: 0 !important; }
