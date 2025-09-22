@@ -1,73 +1,210 @@
+/* =========================================================
+   ACNH Korean Fan Wiki – Green/Light theme
+   - 데스크톱: 좌측 공백 제거, 상단 햄버거 숨김
+   - 모바일: 우하단 FAB(탑/메뉴/공유), 오버레이 사이드바
+   - iPhone safe-area 대응, z-index 정리
+   ========================================================= */
+
 :root{
-  --bg:#ffffff; --text:#1a2b20; --muted:#5d7a69; --border:#e5efe6;
-  --surface:#f6fbf6; --accent:#2aa06a; --accent-2:#8bd17b; --shadow:0 6px 18px rgba(22,85,58,.08);
+  --bg:#ffffff;
+  --text:#1a2b20;
+  --muted:#5d7a69;
+  --border:#e5efe6;
+  --surface:#f6fbf6;
+  --accent:#2aa06a;
+  --accent-2:#8bd17b;
+  --shadow:0 6px 18px rgba(22,85,58,.08);
 }
+
 @media (prefers-color-scheme: dark){
-  :root{ --bg:#0f1412; --text:#e7f5ed; --muted:#9bb6a7; --border:#25352b; --surface:#121a16; --accent:#3fc17f; --accent-2:#7ee28a; --shadow:0 8px 20px rgba(0,0,0,.35); }
+  :root{
+    --bg:#0f1412;
+    --text:#e7f5ed;
+    --muted:#9bb6a7;
+    --border:#25352b;
+    --surface:#121a16;
+    --accent:#3fc17f;
+    --accent-2:#7ee28a;
+    --shadow:0 8px 20px rgba(0,0,0,.35);
+  }
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,Apple SD Gothic Neo,Pretendard,Segoe UI,Helvetica,Arial}
-a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-.skip{position:absolute;left:-9999px} .skip:focus{position:static;background:var(--surface);padding:8px;border:1px solid var(--border)}
-.site-header{position:sticky;top:0;z-index:20;display:flex;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg);backdrop-filter:blur(6px)}
-.brand{font-weight:800;font-size:18px}
-.nav-toggle{display:inline-flex;flex-direction:column;gap:4px;background:transparent;border:0;cursor:pointer}
-.nav-toggle span{width:22px;height:2px;background:var(--text);display:block}
-.spacer{flex:1}
-.search input{border:1px solid var(--border);background:var(--surface);padding:8px 10px;border-radius:8px;min-width:180px}
-.theme-toggle{background:transparent;border:1px solid var(--border);border-radius:8px;padding:6px 8px;cursor:pointer}
-.layout{display:grid;grid-template-columns:260px 1fr;max-width:1280px;margin:0 auto}
-.sidebar{border-right:1px solid var(--border);padding:16px;height:calc(100vh - 58px);position:sticky;top:58px;overflow:auto;background:var(--surface)}
-.sidebar h3{margin:18px 0 8px;color:var(--accent)}
-.sidebar ul{list-style:none;padding-left:16px;margin:6px 0}
-.sidebar a{display:inline-block;padding:2px 0;border-radius:6px}
-.sidebar a.active{background:rgba(42,160,106,.14);padding:2px 6px}
-.species-grid{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:2px}
-@media (min-width: 900px){.species-grid{grid-template-columns:repeat(4, minmax(0,1fr))}}
-.content{padding:24px;min-width:0}
-.content .card{background:var(--bg);border:1px solid var(--border);padding:16px;border-radius:12px;box-shadow:var(--shadow);margin:12px 0}
-.hero-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
-@media (min-width:900px){.hero-grid{grid-template-columns:repeat(4,1fr)}}
-.card.hero{background:var(--surface);border:1px solid var(--border);min-height:112px;display:flex;align-items:end;padding:16px;transition:transform .15s ease,box-shadow .15s ease}
-.card.hero:hover{transform:translateY(-2px)}
-table{width:100%;border-collapse:collapse;background:var(--bg)}
-th,td{border-bottom:1px solid var(--border);padding:10px 8px;text-align:left}
-tr:nth-child(even){background:rgba(42,160,106,.04)}
-.chip{background:var(--accent-2);border:1px solid var(--border);border-radius:999px;padding:.25rem .6rem;font-weight:600;cursor:pointer}
-.chip[aria-pressed="true"]{outline:2px solid var(--accent)}
-.badge{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid var(--border);font-size:.85em}
-.badge.on{background:rgba(42,160,106,.12)}
-.site-footer{border-top:1px solid var(--border);margin-top:24px;padding:16px;text-align:center;color:var(--muted)}
+
+/* ---------- Base ---------- */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.6 ui-sans-serif,system-ui,Apple SD Gothic Neo,Pretendard,Segoe UI,Helvetica,Arial;
+}
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+.skip{ position:absolute; left:-9999px; }
+.skip:focus{
+  position:static; background:var(--surface);
+  padding:8px; border:1px solid var(--border);
+}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky; top:0;
+  z-index:50; /* 최상단 */
+  display:flex; gap:12px; align-items:center;
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+  backdrop-filter:blur(6px);
+}
+.brand{ font-weight:800; font-size:18px; }
+.spacer{ flex:1; }
+.search input{
+  border:1px solid var(--border);
+  background:var(--surface);
+  padding:8px 10px; border-radius:8px; min-width:180px;
+}
+.theme-toggle{
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px; padding:6px 8px; cursor:pointer;
+}
+
+/* 상단 햄버거는 전 구간에서 숨김 (모바일은 FAB 사용) */
+.nav-toggle{ display:none !important; }
+.nav-toggle span{ width:22px; height:2px; background:var(--text); display:block; }
+
+/* ---------- Layout ---------- */
+/* 레이아웃: 전체 폭 사용(왼쪽 공백 제거) */
+.layout{
+  display:grid;
+  grid-template-columns:280px 1fr; /* 고정 폭 사이드바 + 유동 본문 */
+  max-width:none;
+  margin:0;
+}
+
+/* Sidebar */
+.sidebar{
+  border-right:1px solid var(--border);
+  padding:16px;
+  height:calc(100vh - 58px);
+  position:sticky; top:58px;
+  overflow:auto;
+  background:var(--surface);
+  z-index:40; /* 오버레이보다 위 */
+  scrollbar-gutter: stable;
+}
+.sidebar h3{ margin:18px 0 8px; color:var(--accent); }
+.sidebar ul{ list-style:none; padding-left:16px; margin:6px 0; }
+.sidebar a{ display:inline-block; padding:2px 0; border-radius:6px; }
+.sidebar a.active{ background:rgba(42,160,106,.14); padding:2px 6px; }
+
+/* 본문 */
+.content{
+  padding:24px; min-width:0;
+  max-width:1280px;  /* 본문 가독 폭 */
+  margin:0 auto;     /* 가운데 정렬 */
+}
+
+/* 카드/그리드 */
+.content .card{
+  background:var(--bg);
+  border:1px solid var(--border);
+  padding:16px; border-radius:12px;
+  box-shadow:var(--shadow); margin:12px 0;
+}
+.hero-grid{ display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
+@media (min-width:900px){ .hero-grid{ grid-template-columns:repeat(4,1fr); } }
+.card.hero{
+  background:var(--surface);
+  border:1px solid var(--border);
+  min-height:112px; display:flex; align-items:end;
+  padding:16px; transition:transform .15s ease, box-shadow .15s ease;
+}
+.card.hero:hover{ transform:translateY(-2px); }
+
+/* 표 */
+table{ width:100%; border-collapse:collapse; background:var(--bg); }
+th,td{ border-bottom:1px solid var(--border); padding:10px 8px; text-align:left; }
+tr:nth-child(even){ background:rgba(42,160,106,.04); }
+
+/* 조각 요소 */
+.chip{
+  background:var(--accent-2);
+  border:1px solid var(--border);
+  border-radius:999px; padding:.25rem .6rem;
+  font-weight:600; cursor:pointer;
+}
+.chip[aria-pressed="true"]{ outline:2px solid var(--accent); }
+.badge{ display:inline-block; padding:.1rem .4rem; border-radius:6px; border:1px solid var(--border); font-size:.85em; }
+.badge.on{ background:rgba(42,160,106,.12); }
+
+/* 종별 그리드 */
+.species-grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; }
+@media (min-width:900px){ .species-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); } }
+
+/* ---------- Footer ---------- */
+.site-footer{
+  border-top:1px solid var(--border);
+  margin-top:24px; padding:16px;
+  background:var(--surface);
+  font-size:.9rem; color:var(--muted);
+  text-align:center;
+}
+.site-footer .legal-links{ margin-bottom:8px; }
+.site-footer .legal-links a{ margin:0 4px; color:var(--accent); font-weight:500; }
+.site-footer .copyright{ line-height:1.5; }
+.site-footer .attribution{ font-size:.8rem; color:var(--muted); }
+
+/* ---------- Mobile (<=960px) ---------- */
 @media (max-width:960px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{position:fixed;top:58px;left:0;width:280px;height:calc(100vh - 58px);transform:translateX(-100%);transition:transform .2s ease;z-index:30}
-  .sidebar.open{transform:translateX(0)}
+  .layout{ grid-template-columns:1fr; }
+  .sidebar{
+    position:fixed; top:58px; left:0;
+    width:280px; height:calc(100vh - 58px);
+    transform:translateX(-100%);
+    transition:transform .2s ease;
+  }
+  .sidebar.open{ transform:translateX(0); }
 }
 
-.site-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 24px;
-  padding: 16px;
-  background: var(--surface);
-  font-size: 0.9rem;
-  color: var(--muted);
+/* iOS 100vh 보정 */
+@supports (height: 100dvh) {
+  @media (max-width:960px){
+    .sidebar{ height:calc(100dvh - 58px); }
+  }
 }
 
-.site-footer .legal-links {
-  margin-bottom: 8px;
+/* ---------- Overlay ---------- */
+.mobile-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.35);
+  z-index:35; display:none;
 }
+.mobile-overlay.show{ display:block; }
 
-.site-footer .legal-links a {
-  margin: 0 4px;
-  color: var(--accent);
-  font-weight: 500;
+/* ---------- FAB (Floating Action Buttons) ---------- */
+.fab-group{
+  position:fixed;
+  right:max(16px, env(safe-area-inset-right));
+  bottom:max(16px, env(safe-area-inset-bottom));
+  z-index:60;           /* 가장 위 */
+  display:flex; flex-direction:column; gap:10px;
 }
+.fab{
+  display:flex; align-items:center; justify-content:center;
+  width:46px; height:46px; border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--accent-2);
+  color:#054b2e; font-weight:700;
+  box-shadow:var(--shadow);
+  transition:transform .08s ease, filter .08s ease;
+}
+.fab:active{ transform:scale(.96); filter:brightness(.95); }
 
-.site-footer .copyright {
-  line-height: 1.5;
-}
+/* 데스크톱에서는 FAB 숨김 */
+@media (min-width:961px){ .fab-group{ display:none; } }
 
-.site-footer .attribution {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
+/* ---------- Scrollbar (선택) ---------- */
+.sidebar::-webkit-scrollbar{ width:10px; }
+.sidebar::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.15); border-radius:8px; }
+.sidebar::-webkit-scrollbar-track{ background:transparent; }
