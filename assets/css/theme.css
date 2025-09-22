@@ -502,3 +502,36 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 @media (max-width: 768px) {
   .sidebar { --pill-w: 120px; --pill-h: 32px; }
 }
+
+/* 1) 홈 아이콘 중복 제거 */
+.sidebar .menu > ul li h3 > a::before {
+  content: none !important;
+}
+
+/* 2) 배지/섹션 제목을 좌측정렬 + 크기 통일 */
+.sidebar h3,
+.sidebar .menu > ul li h3 > a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;  /* 좌측정렬 */
+  gap: 6px;
+  width: 100%;                  /* 흰색 박스와 동일하게 꽉 채움 */
+  min-height: 36px;             /* 버튼 높이 일정 */
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+/* 3) 아이콘(::before)도 좌측에만 표시되게 */
+.sidebar h3::before {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+/* 4) 흰색 컨테이너(ul) 폭 맞추기 */
+.sidebar h3 + ul {
+  width: 100%;
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
