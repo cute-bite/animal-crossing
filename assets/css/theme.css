@@ -441,3 +441,64 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 
 /* 5) species-grid(종류별 칩)는 기존 스타일 유지 */
 .sidebar .species-grid li { padding-left: 0 !important; }
+
+/* ===== [패치] 섹션 배지(홈/게임정보/...) 폭 통일 ===== */
+
+/* 1) 공통 변수: 배지 가로폭/높이 */
+.sidebar {
+  --pill-w: 140px;   /* 모든 배지의 동일 가로폭 */
+  --pill-h: 34px;    /* 높이(폰트에 맞춰 필요시 조정) */
+}
+
+/* 2) h3 자체를 '배지'로 만들기 (섹션 제목들) */
+.sidebar h3 {
+  display: inline-flex;
+  width: var(--pill-w);
+  height: var(--pill-h);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 0 12px;              /* 좌우 여백(텍스트 중심 정렬) */
+  white-space: nowrap;          /* 줄바꿈 금지 */
+  overflow: hidden;             /* 넘치면 숨김 */
+  text-overflow: ellipsis;      /* 너무 길면 … 처리 */
+  /* 기존의 파스텔 배경/보더가 있다면 그대로 유지됩니다.
+     없다면 예시로 한 줄 추가:
+     background: linear-gradient(0deg,#fff 0%,#fff 40%, #ffd9ec 100%);
+     border: 1px solid #f4e8f1;
+  */
+}
+
+/* 3) '홈'은 <h3> 안에 <a>가 있으므로, a도 배지처럼 보이게 */
+.sidebar .menu > ul li h3 > a {
+  display: inline-flex;
+  width: var(--pill-w);
+  height: var(--pill-h);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 4) 아이콘(::before)도 배지 안쪽에서 정렬되도록 */
+.sidebar h3::before,
+.sidebar .menu > ul li h3 > a::before {
+  margin-right: 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* 5) '홈' 배지에 집 아이콘 */
+.sidebar .menu > ul li h3 > a::before {
+  content: "🏠";
+}
+
+/* 6) 모바일에서는 살짝 더 좁게 */
+@media (max-width: 768px) {
+  .sidebar { --pill-w: 120px; --pill-h: 32px; }
+}
