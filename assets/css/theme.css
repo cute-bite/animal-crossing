@@ -209,64 +209,166 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar::-webkit-scrollbar-thumb{ background:rgba(0,0,0,.15); border-radius:8px; }
 .sidebar::-webkit-scrollbar-track{ background:transparent; }
 
-/* 전체 사이드바 (위키 느낌) */
+/* ===========================
+   Cute Fan-Wiki Sidebar Style
+   (동물의 숲 팬위키 느낌)
+   =========================== */
 .sidebar {
+  /* 작고 단정한 기본값 유지 */
   font-size: 13px;
-  line-height: 1.5;
-  font-family: "Noto Sans KR", "맑은 고딕", sans-serif;
-  color: #333;
+  line-height: 1.55;
+  font-family: "Nunito", "Noto Sans KR", "맑은 고딕", system-ui, -apple-system, sans-serif;
+  color: #334;
 }
 
-/* 섹션 제목 */
+/* 파스텔 팔레트 (필요시만 조정) */
+.sidebar {
+  --cute-pink:   #ffd9ec;
+  --cute-green:  #cdeccf;
+  --cute-blue:   #cfeeff;
+  --cute-yellow: #fff3bf;
+  --cute-violet: #e7dcff;
+  --cute-line:   #f4e8f1;
+  --cute-text:   #334;
+  --cute-hover:  #ffedf6;
+}
+
+/* 섹션 제목: 동글 배지 + 살짝 파스텔 라인 */
 .sidebar h3 {
   font-size: 14px;
-  font-weight: 600;
-  margin: 10px 0 6px;
-  padding-left: 6px;
-  border-left: 3px solid #8cbf75; /* 파스텔 그린 강조선 */
-  display: flex;
+  font-weight: 700;
+  margin: 12px 0 6px;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: var(--cute-text);
+  background: linear-gradient(0deg, #fff 0%, #fff 40%, var(--cute-pink) 100%);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  border: 1px solid var(--cute-line);
 }
 
-/* 제목 앞 아이콘 스타일 */
+/* h3 안에 있는 이모지는 살짝 축소해 귀여운 느낌 */
 .sidebar h3::before {
-  content: "📌";   /* 원하는 이모지나 아이콘 */
+  content: "🌸";          /* 기본값(섹션별로 아래 nth로 바꿔줌) */
   font-size: 13px;
-  margin-right: 4px;
-  opacity: 0.8;
+  transform: translateY(-1px);
+  opacity: .9;
 }
 
-/* 리스트 항목 */
+/* 섹션별 이모지 스왑 (문서 내 h3 순서 기준) */
+.sidebar h3:nth-of-type(1)::before { content: "🌳"; } /* 게임 정보 */
+.sidebar h3:nth-of-type(2)::before { content: "🏝️"; } /* 장소 & 시스템 */
+.sidebar h3:nth-of-type(3)::before { content: "🎉"; } /* 이벤트 & 시즌 */
+.sidebar h3:nth-of-type(4)::before { content: "🧑‍🤝‍🧑"; } /* 커뮤니티 & 위키 */
+.sidebar h3:nth-of-type(5)::before { content: "🧩"; } /* 기타 요소 */
+
+/* 섹션 카드: h3 다음의 ul을 동글동글 카드로 */
+.sidebar h3 + ul {
+  background: #fff;
+  border: 1px solid var(--cute-line);
+  border-radius: 14px;
+  padding: 8px 10px;
+  margin: 6px 0 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+/* 리스트 기본: 불릿 제거 후 귀여운 포인트 */
 .sidebar ul {
-  margin: 2px 0 6px 16px;
+  list-style: none;
+  margin: 4px 0 6px 0;
   padding: 0;
-  list-style-type: none;
 }
-
 .sidebar ul li {
-  margin: 2px 0;
   position: relative;
-  padding-left: 12px;
+  margin: 2px 0;
+  padding-left: 16px;
 }
-
-/* 불릿 대신 작은 네모 */
 .sidebar ul li::before {
-  content: "▪";
+  content: "🐾";          /* 귀여운 불릿 */
   position: absolute;
   left: 0;
-  top: 0;
-  font-size: 11px;
-  color: #999;
+  top: 0.1em;
+  font-size: 12px;
+  opacity: .8;
 }
 
-/* 링크 */
+/* 링크: 살짝 필칩 느낌의 호버 */
 .sidebar ul li a {
-  font-size: 13px;
+  display: inline-block;
   text-decoration: none;
-  color: #333;
+  color: var(--cute-text);
+  padding: 2px 6px;
+  border-radius: 8px;
+  transition: background-color .16s ease, transform .12s ease;
 }
 .sidebar ul li a:hover {
-  color: #0077cc;   /* 살짝 푸른색 */
-  text-decoration: underline;
+  background: var(--cute-hover);
+  transform: translateX(2px);
+  text-decoration: none;
+}
+
+/* “종류별” 그리드(태그 칩처럼) */
+.sidebar .species-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 4px 8px;
+  margin: 6px 0;
+  padding: 0;
+}
+.sidebar .species-grid li {
+  padding-left: 0;           /* 기존 불릿 제거 */
+}
+.sidebar .species-grid li::before {
+  content: none;
+}
+.sidebar .species-grid a {
+  display: block;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--cute-blue);
+  border: 1px solid #e6f5ff;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset;
+}
+.sidebar .species-grid a:hover {
+  background: #e8f7ff;
+}
+
+/* 세부 중첩 리스트(남성/여성/본편/외전 등) 여백 살짝 좁게 */
+.sidebar ul ul {
+  margin: 4px 0 4px 12px;
+}
+
+/* 모바일에서 더 컴팩트하게 */
+@media (max-width: 768px) {
+  .sidebar { font-size: 12.5px; }
+  .sidebar h3 { font-size: 13.5px; padding: 4px 8px; }
+  .sidebar h3 + ul { padding: 6px 8px; border-radius: 12px; }
+  .sidebar .species-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px; }
+}
+
+/* 다크 모드(있다면) 살짝 대비 보정 */
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    --cute-text: #e9ecf1;
+    --cute-line: #3a3a46;
+    --cute-hover: #3a2f39;
+    --cute-pink: #3a2d36;
+    --cute-blue: #263142;
+  }
+  .sidebar h3 {
+    background: linear-gradient(0deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.02) 40%, var(--cute-pink) 100%);
+    border-color: var(--cute-line);
+  }
+  .sidebar h3 + ul {
+    background: #1f2127;
+    border-color: var(--cute-line);
+    box-shadow: none;
+  }
+  .sidebar .species-grid a {
+    background: var(--cute-blue);
+    border-color: #2d3a4a;
+  }
 }
