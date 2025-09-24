@@ -637,24 +637,3 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   color: var(--text); /* 본문 글자색 */
 }
 
-/* 행 전체가 하이라이트되도록 기본 패딩/반경 */
-.sidebar .game-list a{
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
-  width:100%; min-height:36px;
-  padding:6px 10px; border-radius:10px; box-sizing:border-box;
-}
-
-/* hover/active (또는 aria-current) 때 전체 폭 하이라이트 */
-.sidebar .game-list a:hover,
-.sidebar .game-list a.active,
-.sidebar .game-list a[aria-current="page"]{
-  background: rgba(42,160,106,.14);
-}
-
-/* 하이라이트일 때 뱃지 배경은 투명 → 뒤의 초록이 드러남 */
-.sidebar .game-list a:hover .g-year,
-.sidebar .game-list a.active .g-year,
-.sidebar .game-list a[aria-current="page"] .g-year{
-  background: transparent;
-  border-color: transparent;   /* 테두리도 감춤(원하면 남겨도 OK) */
-}
