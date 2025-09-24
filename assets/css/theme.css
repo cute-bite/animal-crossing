@@ -576,3 +576,26 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   padding:2px 6px; border:1px solid var(--border);
   border-radius:999px; color:var(--muted); background:var(--surface);
 }
+
+/* 제목-년도만 좌우로, 링크 폭은 그대로 */
+.sidebar .game-list a {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+
+  width:100%;           /* 링크가 li 안에서 꽉 차도록 */
+  padding:2px 4px;      /* 패딩 살짝 */
+  box-sizing:border-box;
+}
+
+.sidebar .g-title {
+  flex:1;                 /* 남는 공간 다 차지 */
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.sidebar .g-year {
+  flex-shrink:0;          /* 줄어들지 않음 */
+  margin-left:8px;
+}
