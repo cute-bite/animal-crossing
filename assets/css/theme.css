@@ -467,3 +467,39 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
     grid-template-columns: repeat(1, minmax(0,1fr)) !important; /* 화면이 극히 좁을 때만 1열 */
   }
 }
+
+/* 굿즈 그리드 (아미보/인형/굿즈) */
+.sidebar .goods-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr)); /* 2열 */
+  gap: 4px 8px;
+  margin: 6px 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px){
+  .sidebar .goods-grid {
+    grid-template-columns: repeat(3, minmax(0,1fr)); /* 데스크탑에서는 3열 */
+  }
+}
+
+.sidebar .goods-grid li { padding-left: 0; }
+.sidebar .goods-grid li::before { content: none; }
+.sidebar .goods-grid a {
+  display: block;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--cute-blue, #cfeeff);
+  border: 1px solid #e6f5ff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
+  color: var(--cute-text, #334);
+  text-decoration: none;
+  transition: background-color .16s ease, transform .12s ease;
+}
+.sidebar .goods-grid a:hover {
+  background: #e8f7ff;
+  border-color: #bfe7ff;
+  transform: translateY(-1px);
+}
