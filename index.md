@@ -9,31 +9,24 @@ title: 홈
 > 이 정보는 Nookipedia(CC BY-SA) 기반으로 한국어 번역·재구성되었습니다.  
 > Nintendo와는 무관한 **팬 메이드 프로젝트**입니다.
 
-<!-- 메인: 생일 위젯 -->
-<section class="card hero birthday-card" id="birthday-widget" aria-labelledby="birthday-title">
-  <h2 id="birthday-title">🎂 이번 달 생일</h2>
+  <!-- 캘린더 -->
+<section class="card hero birthday-card" id="birthday-card" aria-labelledby="birthday-title">
+  <!-- 헤더: 오늘 생일 문구 + 월 네비 -->
+  <div class="bd-header">
+    <h2 id="birthday-title" class="bd-today">🎂 <span id="bd-today-line">이번 달 생일</span></h2>
 
-  <!-- 오늘 생일 영역 (있을 때만 채워짐) -->
-  <div id="birthday-today" class="bd-today" aria-live="polite"></div>
-
-  <!-- 달력 헤더: 월 이동 -->
-  <div class="bd-cal-header">
-    <button id="bd-prev" class="chip" type="button" aria-label="이전 달">◀︎</button>
-    <span id="bd-month-label" class="badge"></span>
-    <button id="bd-next" class="chip" type="button" aria-label="다음 달">▶︎</button>
-  </div>
-
-  <!-- 달력 그리드 -->
-  <div class="bd-calendar" role="grid" aria-label="생일 달력">
-    <div class="bd-cal-weekdays" role="row">
-      <span role="columnheader">일</span><span role="columnheader">월</span><span role="columnheader">화</span>
-      <span role="columnheader">수</span><span role="columnheader">목</span><span role="columnheader">금</span><span role="columnheader">토</span>
+    <div class="bd-nav" aria-label="월 변경">
+      <button id="birthday-prev" class="chip" type="button" aria-label="이전 달">◀︎</button>
+      <span id="birthday-month-label" class="badge">0000년 00월</span>
+      <button id="birthday-next" class="chip" type="button" aria-label="다음 달">▶︎</button>
     </div>
-    <div id="bd-cal-body" class="bd-cal-body"></div>
   </div>
+
+  <!-- 캘린더 그리드 -->
+  <div id="birthday-calendar" class="birthday-grid" role="grid"></div>
 </section>
 
-<!-- 스크립트 로드 -->
+<!-- 스크립트: 달력 전용 파일 하나만 로드 -->
 <script src="{{ site.baseurl }}/assets/js/birthdays-calendar.js" defer></script>
 
 

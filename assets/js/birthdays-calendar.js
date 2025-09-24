@@ -161,3 +161,29 @@
     renderCalendar(viewYear, viewMonth);
   });
 })();
+
+/* 달력 헤더 레이아웃 */
+.bd-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.bd-today{
+  margin:0;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.bd-nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+@media (max-width:600px){
+  .bd-header{ flex-wrap:wrap; }
+  .bd-nav{ order:2; width:100%; justify-content:flex-end; }
+  .bd-today{ order:1; width:100%; }
+}
