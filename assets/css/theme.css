@@ -272,6 +272,8 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar h3:nth-of-type(6)::before { content: "🏝️"; } /* 장소 & 시스템 */
 .sidebar h3:nth-of-type(7)::before { content: "🎉"; } /* 이벤트 & 시즌 */
 .sidebar h3:nth-of-type(8)::before { content: "🧩"; } /* 기타 요소 */
+.sidebar h3:nth-of-type(8)::before { content: "🎁"; } /* 굿즈 */
+.sidebar h3:nth-of-type(8)::before { content: "🌸"; } /* 마이페이지 */
 
 /* 섹션 카드: h3 다음의 ul을 동글동글 카드로 */
 .sidebar h3 + ul {
@@ -493,4 +495,49 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-left: 0;
   margin-right: 0;
   padding-left: 10px; /* 필요시 0~12px 사이로 조절 */
+}
+
+/* ===== Mobile-only sidebar scroll restore ===== */
+:root{ --header-h: 58px; } /* 헤더 높이 값 (필요시 조정) */
+
+@media (max-width:960px){
+  .layout{ grid-template-columns:1fr; }
+
+  .sidebar{
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    width: min(82vw, 320px);
+    height: calc(100vh - var(--header-h));
+    overflow: auto;                     /* ← 모바일에서만 자체 스크롤 */
+    -webkit-overflow-scrolling: touch;  /* iOS 부드러운 스크롤 */
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);       /* 기본: 숨김 */
+    transition: transform .22s ease;
+    z-index: 40;
+  }
+  /* 100dvh 지원 기기 보정 */
+  @supports (height: 100dvh){
+    .sidebar{ height: calc(100dvh - var(--header-h)); }
+  }
+
+  /* 열렸을 때 보여주기 */
+  .sidebar.open{ transform: translateX(0); }
+
+  /* 사이드바 열렸을 때 본문 스크롤 막기(선택) */
+  body.menu-open{ overflow: hidden; }
+
+  /* 오버레이(있다면) 표시 */
+  .mobile-overlay.show{ display:block; }
+}
+
+/* 데스크톱에서는 페이지 전체 스크롤만 사용 (sidebar는 자연 높이) */
+@media (min-width:961px){
+  .sidebar{
+    position: static;
+    height: auto;
+    overflow: visible;
+    transform: none;
+  }
 }
