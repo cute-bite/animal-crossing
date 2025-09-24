@@ -603,3 +603,18 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-top: 6px;      /* 리스트 위쪽 여백 */
   margin-bottom: 8px;   /* 리스트 아래쪽 여백 */
 }
+
+/* === 사이드바 카드 안 목록 왼쪽 여백 복구 === */
+/* h3 다음 카드 UL과 그 안의 모든 하위 UL에 동일 여백 */
+.sidebar h3 + ul,
+.sidebar h3 + ul ul {
+  padding-left: 16px !important;   /* 14~20px 취향대로 조절 */
+}
+
+/* 그룹 라벨과 리스트 사이 간격(붙어 보일 때) */
+.sidebar .menu li:has(> ul) { margin-bottom: 6px; }
+.sidebar .menu li > ul      { margin-top: 6px; }
+
+/* 게임 목록 항목 간 세로 간격 살짝 */
+.sidebar .game-list > li { margin: 6px 0; }
+
