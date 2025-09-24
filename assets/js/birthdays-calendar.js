@@ -1,139 +1,143 @@
 // /assets/js/birthdays-calendar.js
 (async function () {
-  // baseurl 탐지 (기존 스크립트와 동일한 방식)
-  const base = (typeof window.SITE_BASEURL !== 'undefined')
-    ? window.SITE_BASEURL
-    : (document.documentElement.getAttribute('data-baseurl') || '');
+  const base =
+    (typeof window.SITE_BASEURL !== "undefined")
+      ? window.SITE_BASEURL
+      : (document.documentElement.getAttribute("data-baseurl") || "");
 
-  const $today = document.getElementById('birthday-today');
-  const $monthLabel = document.getElementById('bd-month-label');
-  const $prev = document.getElementById('bd-prev');
-  const $next = document.getElementById('bd-next');
-  const $grid = document.getElementById('bd-cal-body');
-
+  // ── HTML 요소 (index.md의 ID와 정확히 맞춤) ──────────────────────────────
+  const $todayLine  = document.getElementById("bd-today-line");         // 상단 "오늘은 ..." 문구 들어갈 자리
+  const $monthLabel = document.getElementById("birthday-month-label");  // "YYYY년 MM월"
+  const $prev       = document.getElementById("birthday-prev");         // ◀
+  const $next       = document.getElementById("birthday-next");         // ▶
+  const $grid       = document.getElementById("birthday-calendar");     // 달력 그리드 컨테이너
   if (!$grid) return;
 
-  // 데이터 불러오기
+  // ── 데이터 로드 (/assets/data/villagers.json : "birthday":"MM-DD") ──────
   let villagers = [];
   try {
-    const res = await fetch(`${base}/assets/data/villagers.json`, { cache: 'no-store' });
-    villagers = await res.json(); // [{ name, species, birthday:"MM-DD" }, ...]
+    const res = await fetch(`${base}/assets/data/villagers.json`, { cache: "no-store" });
+    villagers = await res.json();
   } catch (e) {
     console.error(e);
   }
 
-  // "MM-DD" → {m,d} 파서
+  // "MM-DD" → { m, d }
   const parseMD = (s) => {
-    if (!s || typeof s !== 'string') return null;
-    const m = s.slice(0,2), d = s.slice(3,5);
-    const mi = Number(m), di = Number(d);
-    if (!mi || !di) return null;
-    return { m: mi, d: di };
+    if (!s || typeof s !== "string") return null;
+    const m = Number(s.slice(0, 2));
+    const d = Number(s.slice(3, 5));
+    if (!m || !d) return null;
+    return { m, d };
   };
 
-  // 오늘 정보
-  const today = new Date();
-  const realY = today.getFullYear();
-  const realM = today.getMonth(); // 0~11
-  const realD = today.getDate();
+  // 오늘(실제 날짜)
+  const today  = new Date();
+  const realY  = today.getFullYear();
+  const realM0 = today.getMonth(); // 0~11
+  const realD  = today.getDate();
 
-  // 뷰 상태(월 이동용)
-  let viewYear = realY;
-  let viewMonth = realM; // 0~11
+  // 뷰 상태(월 이동)
+  let viewY  = realY;
+  let viewM0 = realM0;
 
-  // 월 레이블
-  const monthLabel = (y, m0) => `${y}년 ${String(m0 + 1).padStart(2,'0')}월`;
+  const monthLabel = (y, m0) => `${y}년 ${String(m0 + 1).padStart(2, "0")}월`;
 
-  // 해당 월의 생일 맵 { dayNumber: [villagers...] }
+  // 해당 월의 생일 맵 → Map<dayNumber, [villager...]>
   function mapBirthdays(month0) {
-    const mm = String(month0 + 1).padStart(2,'0'); // "01"~"12"
     const map = new Map();
     for (const v of villagers) {
       const md = parseMD(v.birthday);
       if (!md) continue;
-      if (md.m === (month0 + 1)) {
+      if (md.m === month0 + 1) {
         if (!map.has(md.d)) map.set(md.d, []);
         map.get(md.d).push(v);
       }
     }
-    return map; // Map<day, array>
+    return map;
   }
 
-  // 오늘 생일 문구 표시 (실제 '오늘' 기준)
-  function renderToday() {
-    const mm = realM + 1;
-    const map = mapBirthdays(realM);
-    const arr = map.get(realD) || [];
-    if (arr.length) {
-      const links = arr.map(v => {
+  // 상단 "오늘은 ___ 의 생일" 문구
+  function renderTodayLine() {
+    const monthMap = mapBirthdays(realM0);
+    const list = monthMap.get(realD) || [];
+    if (list.length) {
+      const links = list.map(v => {
         const slug = encodeURIComponent(v.name);
         return `<a class="bd-pill" href="${base}/villagers/?q=${slug}">${v.name}</a>`;
-      }).join(' ');
-      $today.innerHTML = `오늘은 ${links} 의 생일이에요! 🎁`;
+      }).join(" ");
+      $todayLine.innerHTML = `오늘은 ${links}의 생일입니다 🎂`;
     } else {
-      $today.innerHTML = ''; // 오늘 생일 없으면 숨김
+      $todayLine.textContent = "이번 달 생일";
     }
   }
 
   // 달력 렌더
   function renderCalendar(y, m0) {
+    // 헤더 레이블
     $monthLabel.textContent = monthLabel(y, m0);
-    $grid.innerHTML = '';
 
-    // 이번 달 생일 맵
+    // 그리드 초기화
+    $grid.innerHTML = "";
+
+    // 요일 헤더
+    const daysKo = ["일", "월", "화", "수", "목", "금", "토"];
+    for (const d of daysKo) {
+      const h = document.createElement("div");
+      h.className = "bd-head";
+      h.textContent = d;
+      $grid.appendChild(h);
+    }
+
     const monthMap = mapBirthdays(m0);
 
-    // 달력 범위 계산
     const first = new Date(y, m0, 1);
-    const firstDow = first.getDay(); // 0(일)~6(토)
+    const firstDow = first.getDay();
     const daysInMonth = new Date(y, m0 + 1, 0).getDate();
+    const prevMonthLast = new Date(y, m0, 0).getDate();
 
-    // 앞쪽 이전달 채우기
-    const prevDays = firstDow; // 앞에 들어갈 칸 수
-    const prevMonthLastDate = new Date(y, m0, 0).getDate();
+    const totalCells = 42; // 6주 고정
 
-    // 총 6주(42칸)로 고정 렌더
-    const totalCells = 42;
     for (let i = 0; i < totalCells; i++) {
-      const cell = document.createElement('div');
-      cell.className = 'bd-day';
+      const cell = document.createElement("div");
+      cell.className = "bd-day";
 
-      // 달력 상 실제 날짜 계산
-      let dateNum, cellMonth = m0, cellYear = y, isOther = false;
+      let dateNum, cellY = y, cellM0 = m0, isOther = false;
 
-      if (i < prevDays) { // 이전달
-        dateNum = prevMonthLastDate - (prevDays - 1 - i);
+      if (i < firstDow) {
+        // 이전 달
+        dateNum = prevMonthLast - (firstDow - 1 - i);
         isOther = true;
-        // 이전달 계산
-        if (m0 === 0) { cellMonth = 11; cellYear = y - 1; } else { cellMonth = m0 - 1; }
-      } else if (i >= prevDays + daysInMonth) { // 다음달
-        dateNum = i - (prevDays + daysInMonth) + 1;
+        if (m0 === 0) { cellM0 = 11; cellY = y - 1; } else { cellM0 = m0 - 1; }
+      } else if (i >= firstDow + daysInMonth) {
+        // 다음 달
+        dateNum = i - (firstDow + daysInMonth) + 1;
         isOther = true;
-        // 다음달 계산
-        if (m0 === 11) { cellMonth = 0; cellYear = y + 1; } else { cellMonth = m0 + 1; }
-      } else { // 이번달
-        dateNum = i - prevDays + 1;
+        if (m0 === 11) { cellM0 = 0; cellY = y + 1; } else { cellM0 = m0 + 1; }
+      } else {
+        // 이번 달
+        dateNum = i - firstDow + 1;
       }
+
+      // 날짜 숫자
+      const num = document.createElement("div");
+      num.className = "bd-date";
+      num.textContent = String(dateNum);
+      cell.appendChild(num);
 
       // 오늘 표시
-      if (cellYear === realY && cellMonth === realM && dateNum === realD) {
-        cell.classList.add('is-today');
+      if (!isOther && cellY === realY && cellM0 === realM0 && dateNum === realD) {
+        cell.classList.add("is-today");
       }
-      if (isOther) cell.classList.add('is-other-month');
-
-      // 날짜 표시
-      const dateEl = document.createElement('div');
-      dateEl.className = 'bd-date';
-      dateEl.textContent = String(dateNum);
-      cell.appendChild(dateEl);
+      if (isOther) cell.classList.add("is-other-month");
 
       // 생일 칩
       if (!isOther && monthMap.has(dateNum)) {
-        const wrap = document.createElement('div');
-        wrap.className = 'bd-people';
+        const wrap = document.createElement("div");
+        wrap.className = "bd-people";
         for (const v of monthMap.get(dateNum)) {
-          const a = document.createElement('a');
-          a.className = 'bd-pill';
+          const a = document.createElement("a");
+          a.className = "bd-pill";
           a.href = `${base}/villagers/?q=${encodeURIComponent(v.name)}`;
           a.textContent = v.name;
           wrap.appendChild(a);
@@ -145,45 +149,19 @@
     }
   }
 
-  // 초기 표시
-  renderToday();
-  renderCalendar(viewYear, viewMonth);
+  // 초기 렌더
+  renderTodayLine();
+  renderCalendar(viewY, viewM0);
 
   // 월 이동
-  $prev?.addEventListener('click', () => {
-    if (viewMonth === 0) { viewMonth = 11; viewYear--; }
-    else { viewMonth--; }
-    renderCalendar(viewYear, viewMonth);
+  $prev.addEventListener("click", () => {
+    if (viewM0 === 0) { viewM0 = 11; viewY--; }
+    else { viewM0--; }
+    renderCalendar(viewY, viewM0);
   });
-  $next?.addEventListener('click', () => {
-    if (viewMonth === 11) { viewMonth = 0; viewYear++; }
-    else { viewMonth++; }
-    renderCalendar(viewYear, viewMonth);
+  $next.addEventListener("click", () => {
+    if (viewM0 === 11) { viewM0 = 0; viewY++; }
+    else { viewM0++; }
+    renderCalendar(viewY, viewM0);
   });
 })();
-
-/* 달력 헤더 레이아웃 */
-.bd-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:10px;
-}
-.bd-today{
-  margin:0;
-  font-weight:800;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-}
-.bd-nav{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-@media (max-width:600px){
-  .bd-header{ flex-wrap:wrap; }
-  .bd-nav{ order:2; width:100%; justify-content:flex-end; }
-  .bd-today{ order:1; width:100%; }
-}
