@@ -9,6 +9,21 @@ title: 홈
 > 이 정보는 Nookipedia(CC BY-SA) 기반으로 한국어 번역·재구성되었습니다.  
 > Nintendo와는 무관한 **팬 메이드 프로젝트**입니다.
 
+<section class="card hero birthday-card" id="birthday-card" aria-labelledby="birthday-title">
+  <h2 id="birthday-title">🎂 이번 달 생일</h2>
+  <p class="birthday-sub">이번 달에 생일인 주민/특별 캐릭터 목록이에요.</p>
+  <div id="birthday-today" class="birthday-today" aria-live="polite"></div>
+  <div id="birthday-list" class="birthday-grid" role="list"></div>
+  <div class="birthday-footer">
+    <button id="birthday-prev" class="chip" type="button" aria-label="이전 달">◀︎</button>
+    <span id="birthday-month-label" class="badge"></span>
+    <button id="birthday-next" class="chip" type="button" aria-label="다음 달">▶︎</button>
+  </div>
+</section>
+
+<script src="{{ site.baseurl }}/assets/js/birthdays.js" defer></script>
+
+
 <div class="hero-grid">
   <a class="card hero" href="{{ '/games/' | relative_url }}"><h3>게임</h3></a>
   <a class="card hero" href="{{ '/nh/'    | relative_url }}"><h3>모여봐요 동물의 숲</h3></a>

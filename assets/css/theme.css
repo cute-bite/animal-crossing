@@ -567,3 +567,59 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   /* 메뉴 열렸을 때 페이지 스크롤 잠금(선택) */
   body.menu-open{ overflow: hidden; }
 }
+
+/* Birthday widget (메인 카드) */
+.birthday-card { padding: 16px 16px 10px; }
+.birthday-card h2 { margin: 0 0 6px; }
+.birthday-sub { margin: 2px 0 10px; color: var(--muted); font-size: .95rem; }
+
+.birthday-today{
+  display:none;
+  margin: 6px 0 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.birthday-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 8px;
+}
+@media (min-width: 820px){
+  .birthday-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (min-width: 1120px){
+  .birthday-grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+}
+
+.bd-item{
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: var(--shadow);
+}
+.bd-item.is-today{
+  outline: 2px solid var(--accent);
+  background: rgba(42,160,106,.06);
+}
+.bd-date{ font-weight: 700; margin-bottom: 4px; color: var(--accent); }
+.bd-names{ line-height: 1.4; }
+
+.bd-empty{
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--muted);
+  padding: 12px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.birthday-footer{
+  display:flex; align-items:center; justify-content:center;
+  gap:10px; margin-top:12px;
+}
