@@ -637,3 +637,20 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   color: var(--text); /* 본문 글자색 */
 }
 
+/* 게임 목록 링크 hover/active 배경 길이 확장 */
+.sidebar .game-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;             /* 전체 폭 차지 */
+  padding: 6px 10px;        /* 세로/가로 패딩 확대 */
+  border-radius: 8px;       /* 살짝 둥글게 */
+  box-sizing: border-box;
+}
+
+.sidebar .game-list a:hover,
+.sidebar .game-list a.active {
+  background: rgba(42,160,106,.14); /* 초록 배경 */
+}
+
