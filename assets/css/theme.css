@@ -580,3 +580,16 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   display: block;
   padding-left: 2px;               /* 링크는 살짝만 들여쓰기 */
 }
+
+/* === 사이드바 카드 안 텍스트 왼쪽 여백 통일 === */
+/* h3 다음의 카드 UL + 그 안의 모든 하위 UL까지 동일 좌측 여백 */
+.sidebar h3 + ul,
+.sidebar h3 + ul ul {
+  padding-left: 16px !important;   /* 숫자만 취향대로 14~20px 조절 */
+}
+
+/* 위에서 0으로 만들었던 규칙 무력화 */
+.sidebar .menu li > ul { padding-left: 16px !important; }
+
+/* 링크 자체는 과도하게 들여쓰지 않도록 */
+.sidebar .menu a { padding-left: 0 !important; }
