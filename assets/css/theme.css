@@ -701,3 +701,29 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   border-radius:999px;
   text-decoration:none;
 }
+
+/* === Nookipedia 스타일의 두 단 리스트 === */
+.bd-plain { padding-top: 4px; }
+.bd-plain-list{
+  column-count: 2;            /* 데스크톱 두 단 */
+  column-gap: 28px;
+  margin: 0;
+  padding: 0 6px 6px 6px;
+  list-style: none;
+}
+.bd-plain-list li{
+  break-inside: avoid;
+  margin: 8px 0;
+  line-height: 1.65;
+}
+.bd-dayword{
+  font-weight: 700;
+  color: #7a5a39;             /* 살짝 브라운 톤 */
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.bd-name{ font-weight: 700; } /* 이름 볼드 */
+@media (max-width: 820px){
+  .bd-plain-list{ column-count: 1; }   /* 모바일 한 단 */
+}
+
