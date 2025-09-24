@@ -567,3 +567,12 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   /* 메뉴 열렸을 때 페이지 스크롤 잠금(선택) */
   body.menu-open{ overflow: hidden; }
 }
+
+/* 제목/년도 좌우 정렬 */
+.sidebar .game-list a{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.sidebar .g-title{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sidebar .g-year{
+  font-size:.85em;
+  padding:2px 6px; border:1px solid var(--border);
+  border-radius:999px; color:var(--muted); background:var(--surface);
+}
