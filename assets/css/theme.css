@@ -567,3 +567,16 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-left:8px;
 }
 
+/* ===== 사이드바 메뉴 전체 좌측 여백 보정 ===== */
+.sidebar h3 + ul {
+  padding-left: 16px !important;   /* 카드 안쪽 전체에 기본 여백 */
+}
+
+.sidebar ul li {
+  margin-left: 0 !important;       /* 혹시 남아있던 margin 제거 */
+}
+
+.sidebar ul li a {
+  display: block;
+  padding-left: 2px;               /* 링크는 살짝만 들여쓰기 */
+}
