@@ -9,28 +9,6 @@ title: 홈
 > 이 정보는 Nookipedia(CC BY-SA) 기반으로 한국어 번역·재구성되었습니다.  
 > Nintendo와는 무관한 **팬 메이드 프로젝트**입니다.
 
- <!-- 생일 위젯 -->
- <section class="card birthday-card" id="birthday-card" aria-labelledby="birthday-title">
-   <div class="bd-header">
-     <h2 id="birthday-title" class="bd-title">🎂 이번 달 생일</h2>
-
-     <div class="bd-nav">
-       <button id="birthday-prev" class="chip" type="button" aria-label="이전 달">◀︎</button>
-       <span id="birthday-month-label" class="badge">0000년 00월</span>
-       <button id="birthday-next" class="chip" type="button" aria-label="다음 달">▶︎</button>
-     </div>
-   </div>
-
--  <p id="bd-today-line" class="bd-today"></p>
--  <div id="birthday-calendar" class="birthday-grid" role="list"></div>
-+  <p id="bd-today-line" class="bd-today"></p>
-+  <div id="birthday-list" class="bd-plain"></div>
- </section>
-
--<!-- 달력 스크립트 -->
--<script src="{{ site.baseurl }}/assets/js/birthdays-calendar.js" defer></script>
-+<!-- 리스트 스크립트 -->
-+<script src="{{ site.baseurl }}/assets/js/birthdays-list.js" defer></script>
 
 
 
