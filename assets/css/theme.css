@@ -589,7 +589,7 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 }
 
 /* 위에서 0으로 만들었던 규칙 무력화 */
-.sidebar .menu li > ul { padding-left: 16px !important; }
+.sidebar .menu li > ul { padding-left: 10px !important; }
 
 /* 링크 자체는 과도하게 들여쓰지 않도록 */
 .sidebar .menu a { padding-left: 0 !important; }
