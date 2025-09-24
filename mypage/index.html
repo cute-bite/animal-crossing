@@ -1,0 +1,201 @@
+---
+layout: default
+title: 마이페이지
+---
+
+<section class="content card">
+  <h1>마이페이지</h1>
+  <p class="muted">이 브라우저에만 저장돼요. 서버로 업로드되지 않습니다.</p>
+
+  <div class="mypage-panels">
+    <!-- 내 섬 주민 -->
+    <div class="panel">
+      <h2>🏝️ 내 섬 주민 <span class="badge" id="count-islanders">0</span></h2>
+
+      <!-- 추가 폼 -->
+      <form id="form-islander" class="add-form" autocomplete="off">
+        <input type="text" name="name" placeholder="이름 (예: 레이먼드)" required>
+        <input type="url"  name="href" placeholder="프로필 링크 (선택)">
+        <button class="btn btn-primary">＋ 추가</button>
+        <small class="help">최대 10명까지</small>
+      </form>
+
+      <!-- 목록 -->
+      <div id="islanders-list" class="pill-grid empty">저장된 주민이 없어요.</div>
+
+      <div class="panel-actions">
+        <button class="btn btn-outline" id="export-islanders">내보내기</button>
+        <button class="btn btn-ghost" id="clear-islanders">초기화</button>
+      </div>
+    </div>
+
+    <!-- 최애 주민 -->
+    <div class="panel" id="favs">
+      <h2>❤ 최애 주민 <span class="badge" id="count-favs">0</span></h2>
+
+      <!-- 추가 폼 -->
+      <form id="form-fav" class="add-form" autocomplete="off">
+        <input type="text" name="name" placeholder="이름 (예: 캬르미)" required>
+        <input type="url"  name="href" placeholder="프로필 링크 (선택)">
+        <button class="btn btn-primary">♡ 추가</button>
+      </form>
+
+      <!-- 목록 -->
+      <div id="favs-list" class="pill-grid empty">저장된 주민이 없어요.</div>
+
+      <div class="panel-actions">
+        <button class="btn btn-outline" id="export-favs">내보내기</button>
+        <button class="btn btn-ghost" id="clear-favs">초기화</button>
+      </div>
+    </div>
+  </div>
+
+  <details class="hint">
+    <summary>나중에 고급: 주민 페이지/리스트에 “＋ 내 섬 / ♡ 최애” 버튼 붙이기</summary>
+    <p>사이트 전역에서 자동으로 저장 버튼을 붙이는 스니펫도 제공해드릴 수 있어요. 우선은 이 마이페이지에서 직접 추가/삭제만으로 운영해도 충분합니다.</p>
+  </details>
+</section>
+
+<script>
+(() => {
+  const KEY_FAVS = "acnh_favorites_v1";
+  const KEY_ISL  = "acnh_islanders_v1";
+  const LIMIT_ISL = 10;
+
+  const get = k => JSON.parse(localStorage.getItem(k) || "[]");
+  const set = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+  const slug = s => (s || "").trim().toLowerCase().replace(/\s+/g,"-");
+
+  function addItem(key, item, max = null){
+    let list = get(key);
+    // 같은 이름 중복 방지 (id가 있으면 id로, 없으면 name으로)
+    const id = item.id || slug(item.name);
+    if(!id) return;
+    if(list.find(v => (v.id || slug(v.name)) === id)) return alert("이미 추가되어 있어요!");
+    if(max && list.length >= max) return alert(`최대 ${max}명까지 저장할 수 있어요.`);
+    list.push({ id, name: item.name, href: item.href || "" });
+    set(key, list);
+    renderAll();
+  }
+
+  function removeItem(key, id){
+    const list = get(key).filter(v => (v.id || slug(v.name)) !== id);
+    set(key, list);
+    renderAll();
+  }
+
+  function exportList(key){
+    const list = get(key);
+    const text = list.map(v => v.name || v.id).join(", ");
+    navigator.clipboard?.writeText(text)
+      .then(()=>alert("복사 완료:\n" + text))
+      .catch(()=>prompt("복사 실패! 아래 텍스트를 복사해 주세요.", text));
+  }
+
+  function clearList(key){
+    if(!confirm("정말 초기화할까요?")) return;
+    set(key, []);
+    renderAll();
+  }
+
+  function renderList(key, mountId, countId){
+    const list = get(key);
+    const $wrap = document.getElementById(mountId);
+    const $count = document.getElementById(countId);
+    $count.textContent = list.length;
+
+    if(!list.length){
+      $wrap.classList.add("empty");
+      $wrap.innerHTML = "저장된 주민이 없어요.";
+      return;
+    }
+    $wrap.classList.remove("empty");
+    $wrap.innerHTML = list.map(v => {
+      const id = v.id || slug(v.name);
+      const name = v.name || v.id;
+      const href = v.href || "#";
+      return `
+        <div class="pill">
+          <a href="${href}">${name}</a>
+          <button class="pill-x" data-key="${key}" data-id="${id}" aria-label="삭제">×</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderAll(){
+    renderList(KEY_ISL, "islanders-list", "count-islanders");
+    renderList(KEY_FAVS, "favs-list", "count-favs");
+  }
+
+  // 폼 처리
+  function hookForm(formId, key, max=null){
+    const $form = document.getElementById(formId);
+    $form.addEventListener("submit", e=>{
+      e.preventDefault();
+      const fd = new FormData($form);
+      const name = (fd.get("name") || "").toString().trim();
+      const href = (fd.get("href") || "").toString().trim();
+      if(!name) return;
+      addItem(key, { name, href }, max);
+      $form.reset();
+    });
+  }
+
+  // 버튼 위임
+  document.addEventListener("click", e=>{
+    if(e.target.matches(".pill-x")){
+      removeItem(e.target.dataset.key, e.target.dataset.id);
+    }
+    if(e.target.id === "export-islanders") exportList(KEY_ISL);
+    if(e.target.id === "export-favs")       exportList(KEY_FAVS);
+    if(e.target.id === "clear-islanders")   clearList(KEY_ISL);
+    if(e.target.id === "clear-favs")        clearList(KEY_FAVS);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    hookForm("form-islander", KEY_ISL, LIMIT_ISL);
+    hookForm("form-fav", KEY_FAVS, null);
+    renderAll();
+  });
+})();
+</script>
+
+<style>
+/* 마이페이지 전용 소량 스타일 */
+.muted{ color: var(--muted); }
+.mypage-panels{ display:grid; gap:16px; grid-template-columns:1fr; }
+@media(min-width:900px){ .mypage-panels{ grid-template-columns:1fr 1fr; } }
+.panel h2{ margin:0 0 8px; }
+.add-form{ display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 10px; }
+.add-form input{
+  flex:1 1 180px; min-width:180px;
+  padding:8px 10px; border:1px solid var(--border); border-radius:8px;
+  background:var(--bg);
+}
+.add-form .help{ color:var(--muted); align-self:center; }
+
+.pill-grid{
+  display:flex; flex-wrap:wrap; gap:8px;
+  min-height:42px; padding:6px; border:1px solid var(--border);
+  border-radius:12px; background:var(--bg);
+}
+.pill-grid.empty{ color:var(--muted); }
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--border);
+}
+.pill a{ color:inherit; text-decoration:none; }
+.pill-x{
+  border:0; background:transparent; cursor:pointer;
+  font-weight:700; line-height:1; font-size:16px; opacity:.6;
+}
+.pill-x:hover{ opacity:1; }
+
+.panel-actions{ margin-top:8px; display:flex; gap:8px; }
+.btn{ padding:6px 10px; border-radius:8px; cursor:pointer; }
+.btn-primary{ background:var(--accent); color:#fff; border:1px solid var(--accent); }
+.btn-outline{ background:transparent; border:1px solid var(--border); }
+.btn-ghost{ background:transparent; border:0; color:var(--muted); }
+</style>

@@ -86,13 +86,15 @@ a:hover{ text-decoration:underline; }
 .sidebar{
   border-right:1px solid var(--border);
   padding:16px;
-  height:calc(100vh - 58px);
-  position:sticky; top:58px;
-  overflow:auto;
   background:var(--surface);
-  z-index:40; /* 오버레이보다 위 */
-  scrollbar-gutter: stable;
+  z-index:40;
+  /* 기존 코드 삭제:
+     height:calc(100vh - 58px);
+     position:sticky; top:58px;
+     overflow:auto;
+  */
 }
+
 .sidebar h3{ margin:18px 0 8px; color:var(--accent); }
 .sidebar ul{ list-style:none; padding-left:16px; margin:6px 0; }
 .sidebar a{ display:inline-block; padding:2px 0; border-radius:6px; }
@@ -468,3 +470,27 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   }
 }
 
+/* 기본: 사이드바 일반 목록 링크는 왼쪽 정렬 + 전체폭 */
+.sidebar h3 + ul,
+.sidebar h3 + ul li { text-align: left; }
+
+.sidebar ul li a{
+  display: block;          /* inline-block → block */
+  text-align: left;        /* 왼쪽 정렬 */
+  width: 100%;             /* 카드 폭에 맞춰 꽉 차게 */
+  padding: 4px 6px;        /* 살짝 넉넉하게 */
+}
+
+/* 칩(그리드)만 기존처럼 중앙 정렬 유지 */
+.sidebar .species-grid a,
+.sidebar .personality-grid a{
+  text-align: center;
+  width: 100%;
+}
+
+/* 혹시 가운데로 보이게 만드는 여백이 있으면 제거 */
+.sidebar h3 + ul{
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px; /* 필요시 0~12px 사이로 조절 */
+}
