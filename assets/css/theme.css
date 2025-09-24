@@ -96,8 +96,6 @@ a:hover{ text-decoration:underline; }
 }
 
 .sidebar h3{ margin:18px 0 8px; color:var(--accent); }
-.sidebar ul{ list-style:none; padding-left:16px; margin:6px 0; }
-.sidebar a{ display:inline-block; padding:2px 0; border-radius:6px; }
 .sidebar a.active{ background:rgba(42,160,106,.14); padding:2px 6px; }
 
 /* 본문 */
@@ -276,37 +274,8 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   box-sizing: border-box;
 }
 
-/* 리스트 기본 */
-.sidebar ul {
-  list-style: none;
-  margin: 4px 0 6px 0;
-  padding: 0;
-}
-.sidebar ul li {
-  position: relative;
-  margin: 2px 0;
-  padding-left: 16px;
-}
-/* 기본 불릿 제거(귀여운 발바닥 사용 안 함) */
-.sidebar ul li::before { content: none !important; }
 
-/* 링크: 살짝 칩 느낌의 호버 */
-.sidebar ul li a {
-  display: inline-block;
-  text-decoration: none;
-  color: var(--cute-text);
-  padding: 2px 6px;
-  border-radius: 8px;
-  transition: background-color .16s ease, transform .12s ease;
-}
-.sidebar ul li a:hover {
-  background: var(--cute-hover);
-  transform: translateX(2px);
-  text-decoration: none;
-}
 
-/* 세부 중첩 리스트(본편/외전 등) 여백 */
-.sidebar ul ul { margin: 4px 0 4px 12px; }
 
 /* “종류별/성격별” 칩 그리드 — 동일 스타일 */
 .sidebar .species-grid,
@@ -486,40 +455,7 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   padding-left: 10px; /* 필요시 0~12px 사이로 조절 */
 }
 
-/* ===== Mobile-only sidebar scroll restore ===== */
-:root{ --header-h: 58px; } /* 헤더 높이 값 (필요시 조정) */
 
-@media (max-width:960px){
-  .layout{ grid-template-columns:1fr; }
-
-  .sidebar{
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    width: min(82vw, 320px);
-    height: calc(100vh - var(--header-h));
-    overflow: auto;                     /* ← 모바일에서만 자체 스크롤 */
-    -webkit-overflow-scrolling: touch;  /* iOS 부드러운 스크롤 */
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    transform: translateX(-100%);       /* 기본: 숨김 */
-    transition: transform .22s ease;
-    z-index: 40;
-  }
-  /* 100dvh 지원 기기 보정 */
-  @supports (height: 100dvh){
-    .sidebar{ height: calc(100dvh - var(--header-h)); }
-  }
-
-  /* 열렸을 때 보여주기 */
-  .sidebar.open{ transform: translateX(0); }
-
-  /* 사이드바 열렸을 때 본문 스크롤 막기(선택) */
-  body.menu-open{ overflow: hidden; }
-
-  /* 오버레이(있다면) 표시 */
-  .mobile-overlay.show{ display:block; }
-}
 
 /* 데스크톱에서는 페이지 전체 스크롤만 사용 (sidebar는 자연 높이) */
 @media (min-width:961px){
@@ -568,34 +504,71 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   body.menu-open{ overflow: hidden; }
 }
 
-/* 제목/년도 좌우 정렬 */
-.sidebar .game-list a{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.sidebar .g-title{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.sidebar .g-year{
-  font-size:.85em;
-  padding:2px 6px; border:1px solid var(--border);
-  border-radius:999px; color:var(--muted); background:var(--surface);
+
+
+
+.sidebar ul ul {
+  margin: 0;
+  padding-left: 0 !important; /* 들여쓰기 제거 */
+}
+.sidebar ul ul li {
+  margin-left: 0 !important;
 }
 
-/* 제목-년도만 좌우로, 링크 폭은 그대로 */
-.sidebar .game-list a {
+
+/* ===== Sidebar: 들여쓰기 없애고 한 줄 레벨로 정리 ===== */
+.sidebar .menu ul{ padding-left:0 !important; margin:6px 0; }
+.sidebar .menu li{ list-style:none; margin:4px 0; }
+
+/* 하위 ul은 살짝만 간격 */
+.sidebar .menu li > ul{ margin:6px 0 8px 0; padding-left:0; }
+
+/* 텍스트만 있는 그룹 라벨(본편/외전/게임 목록/모여봐요 동물의 숲) 스타일 */
+.sidebar .menu li:has(> ul){
+  font-weight:700;
+  color: var(--muted);
+  margin-top:8px;
+}
+
+/* 실제 링크 항목 기본 모양 */
+.sidebar .menu a{
+  display:block;
+  padding:4px 6px;
+  border-radius:8px;
+  text-decoration:none;
+  color:var(--text);
+}
+.sidebar .menu a:hover{ background: var(--surface); }
+
+/* ===== 게임 목록: 제목-연도 뱃지 좌우 정렬 안정화 ===== */
+.sidebar .game-list a{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:8px;
-
-  width:100%;           /* 링크가 li 안에서 꽉 차도록 */
-  padding:2px 4px;      /* 패딩 살짝 */
+  width:100%;
+  padding:2px 4px;
   box-sizing:border-box;
 }
-
-.sidebar .g-title {
-  flex:1;                 /* 남는 공간 다 차지 */
+.sidebar .g-title{
+  flex:1;                     /* 남는 폭 채우기 */
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
 }
-.sidebar .g-year {
-  flex-shrink:0;          /* 줄어들지 않음 */
+.sidebar .g-year{
+  flex-shrink:0;              /* 줄지 않도록 */
+  font-size:.85em;
+  padding:2px 6px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--muted);
+  background:var(--surface);
   margin-left:8px;
 }
+
+/* (옵션) 그룹 라벨과 항목 사이 간격 약간 띄우기 */
+.sidebar .menu li:has(> ul){ margin-top:10px; }
+
+/* (옵션) 게임 목록 안쪽 UL의 위아래 여백 살짝 */
+.sidebar .game-list > li > ul{ margin:6px 0; }
