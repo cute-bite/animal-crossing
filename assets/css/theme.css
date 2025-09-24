@@ -624,3 +624,16 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   text-overflow: ellipsis;
 }
 
+/* 그룹 라벨만 볼드 처리 */
+.sidebar .menu li:has(> ul) {
+  font-weight: 700;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* 하위 항목들은 다시 일반 글꼴로 */
+.sidebar .menu li > ul li {
+  font-weight: 400;   /* 기본 두께로 복원 */
+  color: var(--text); /* 본문 글자색 */
+}
+
