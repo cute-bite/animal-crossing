@@ -588,8 +588,8 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   padding-left: 16px !important;   /* 숫자만 취향대로 14~20px 조절 */
 }
 
-/* 위에서 0으로 만들었던 규칙 무력화 */
-.sidebar .menu li > ul { padding-left: 1px !important; }
+/* li메뉴 여백 */
+.sidebar .menu li > ul { padding-left: 0px !important; }
 
 /* 링크 자체는 과도하게 들여쓰지 않도록 */
 .sidebar .menu a { padding-left: 0 !important; }
@@ -608,3 +608,19 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar ul li {
   padding-left: 16px;   /* 원하는 값: 12~20px 조절 가능 */
 }
+
+/* 성격/종류 버튼 텍스트 세로·가로 중앙 정렬 */
+.sidebar .species-grid a,
+.sidebar .personality-grid a {
+  display: flex;                /* flexbox로 전환 */
+  align-items: center;          /* 세로 가운데 */
+  justify-content: center;      /* 가로 가운데 */
+  padding: 6px 12px !important;
+  min-height: 34px;             /* 버튼 높이 확보 */
+  font-size: 13px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
