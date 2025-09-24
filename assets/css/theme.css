@@ -672,3 +672,32 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   .birthday-card .bd-nav{ width:100%; justify-content:flex-end; }
   .birthday-card .bd-day{ min-height:78px; }
 }
+
+/* 생일 카드 헤더(제목 + 네비) */
+.birthday-card .bd-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:6px;
+}
+.birthday-card .bd-nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* 오늘 한 줄 문구 */
+.birthday-card .bd-today{
+  margin: 6px 0 12px;
+  font-weight:700;
+}
+
+/* 오늘 문구 안의 이름 pill 링크(선택) */
+.birthday-card .bd-today .bd-pill{
+  margin-right:6px;
+  padding:2px 6px;
+  border:1px solid var(--border, #e5efe6);
+  border-radius:999px;
+  text-decoration:none;
+}
