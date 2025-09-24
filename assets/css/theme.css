@@ -593,3 +593,13 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 
 /* 링크 자체는 과도하게 들여쓰지 않도록 */
 .sidebar .menu a { padding-left: 0 !important; }
+
+/* ===== 그룹 라벨과 리스트 사이 간격 보정 ===== */
+.sidebar .menu li:has(> ul) {
+  margin-bottom: 6px;   /* 라벨과 바로 밑 리스트 간격 */
+}
+
+.sidebar .menu li > ul {
+  margin-top: 6px;      /* 리스트 위쪽 여백 */
+  margin-bottom: 8px;   /* 리스트 아래쪽 여백 */
+}
