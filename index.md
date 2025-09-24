@@ -9,24 +9,23 @@ title: 홈
 > 이 정보는 Nookipedia(CC BY-SA) 기반으로 한국어 번역·재구성되었습니다.  
 > Nintendo와는 무관한 **팬 메이드 프로젝트**입니다.
 
-  <!-- 캘린더 -->
-<section class="card hero birthday-card" id="birthday-card" aria-labelledby="birthday-title">
-  <!-- 헤더: 오늘 생일 문구 + 월 네비 -->
+<section class="card birthday-card" id="birthday-card" aria-labelledby="birthday-title">
   <div class="bd-header">
-    <h2 id="birthday-title" class="bd-today">🎂 <span id="bd-today-line">이번 달 생일</span></h2>
+    <h2 id="birthday-title" class="bd-title">🎂 이번 달 생일</h2>
 
-    <div class="bd-nav" aria-label="월 변경">
+    <div class="bd-nav">
       <button id="birthday-prev" class="chip" type="button" aria-label="이전 달">◀︎</button>
       <span id="birthday-month-label" class="badge">0000년 00월</span>
       <button id="birthday-next" class="chip" type="button" aria-label="다음 달">▶︎</button>
     </div>
   </div>
 
-  <!-- 캘린더 그리드 -->
-  <div id="birthday-calendar" class="birthday-grid" role="grid"></div>
+  <p id="bd-today-line" class="bd-today"></p>
+
+  <div id="birthday-calendar" class="birthday-grid" role="list"></div>
 </section>
 
-<!-- 스크립트: 달력 전용 파일 하나만 로드 -->
+<!-- 스크립트는 그대로 -->
 <script src="{{ site.baseurl }}/assets/js/birthdays-calendar.js" defer></script>
 
 
