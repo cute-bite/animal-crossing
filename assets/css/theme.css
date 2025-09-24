@@ -604,17 +604,4 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-bottom: 8px;   /* 리스트 아래쪽 여백 */
 }
 
-/* === 사이드바 카드 안 목록 왼쪽 여백 복구 === */
-/* h3 다음 카드 UL과 그 안의 모든 하위 UL에 동일 여백 */
-.sidebar h3 + ul,
-.sidebar h3 + ul ul {
-  padding-left: 16px !important;   /* 14~20px 취향대로 조절 */
-}
-
-/* 그룹 라벨과 리스트 사이 간격(붙어 보일 때) */
-.sidebar .menu li:has(> ul) { margin-bottom: 6px; }
-.sidebar .menu li > ul      { margin-top: 6px; }
-
-/* 게임 목록 항목 간 세로 간격 살짝 */
-.sidebar .game-list > li { margin: 6px 0; }
-
+/* 리스트 기본 (구버전) */ .sidebar ul { list-style: none; margin: 4px 0 6px 0; padding: 0; } .sidebar ul li { position: relative; margin: 2px 0; padding-left: 16px; /* ← 이 들여쓰기가 문제 */ } /* 기본 불릿 제거 */ .sidebar ul li::before { content: none !important; } /* 링크: 살짝 칩 느낌의 호버 (구버전) */ .sidebar ul li a { display: inline-block; /* ← block과 충돌 */ text-decoration: none; color: var(--cute-text); padding: 2px 6px; border-radius: 8px; transition: background-color .16s ease, transform .12s ease; } .sidebar ul li a:hover { background: var(--cute-hover); transform: translateX(2px); text-decoration: none; }
