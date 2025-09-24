@@ -567,3 +567,25 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-left:8px;
 }
 
+/* === Sidebar 메뉴 여백 복구 (간단 패치) === */
+
+/* 각 항목 세로 간격 */
+.sidebar h3 + ul li { 
+  margin: 6px 0;            /* 항목 사이 여백 */
+}
+
+/* 링크 터치 영역 조금 더 */
+.sidebar .menu a { 
+  padding: 6px 8px;         /* 기존 4px → 6px */
+}
+
+/* 하위 목록은 위쪽 간격 + 살짝 들여쓰기 */
+.sidebar .menu li > ul { 
+  margin-top: 6px; 
+  padding-left: 10px;       /* 들여쓰기 0이었다면 최소 10px */
+}
+
+/* 그룹 라벨(자식 ul 가진 li) 위쪽 여백 살짝 */
+.sidebar .menu li:has(> ul) { 
+  margin-top: 10px; 
+}
