@@ -637,3 +637,8 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   color: var(--text); /* 본문 글자색 */
 }
 
+/* 데스크톱: 가운데 '메뉴' FAB 숨김 */
+@media (min-width:961px){
+  .fab-group .fab.menu{ display:none !important; }    /* 메뉴에 class="fab menu"인 경우 */
+  .fab-group .fab:nth-child(2){ display:none !important; } /* 예비: 2번째 버튼이 메뉴일 때 */
+}
