@@ -1,5 +1,5 @@
 /* =========================================================
-   ACNH Korean Fan Wiki – Green/Light theme
+   ACNH Korean Fan Wiki – Green/Light theme (FINAL)
    - 데스크톱: 좌측 공백 제거, 상단 햄버거 숨김
    - 모바일: 우하단 FAB(탑/메뉴/공유), 오버레이 사이드바
    - iPhone safe-area 대응, z-index 정리
@@ -138,10 +138,6 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .badge{ display:inline-block; padding:.1rem .4rem; border-radius:6px; border:1px solid var(--border); font-size:.85em; }
 .badge.on{ background:rgba(42,160,106,.12); }
 
-/* 종별 그리드 */
-.species-grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; }
-@media (min-width:900px){ .species-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); } }
-
 /* ---------- Footer ---------- */
 .site-footer{
   border-top:1px solid var(--border);
@@ -219,10 +215,11 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   line-height: 1.55;
   font-family: "Nunito", "Noto Sans KR", "맑은 고딕", system-ui, -apple-system, sans-serif;
   color: #334;
-}
+  /* 섹션 배지 폭/높이 통일용 변수 */
+  --pill-w: 140px;
+  --pill-h: 34px;
 
-/* 파스텔 팔레트 (필요시만 조정) */
-.sidebar {
+  /* 파스텔 팔레트 */
   --cute-pink:   #ffd9ec;
   --cute-green:  #cdeccf;
   --cute-blue:   #cfeeff;
@@ -241,19 +238,26 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 0 12px;
+  width: var(--pill-w);
+  height: var(--pill-h);
   border-radius: 999px;
   color: var(--cute-text);
   background: linear-gradient(0deg, #fff 0%, #fff 40%, var(--cute-pink) 100%);
   box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
   border: 1px solid var(--cute-line);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: flex-start; /* 좌측정렬 */
 }
 
-/* h3 안에 있는 이모지는 살짝 축소해 귀여운 느낌 */
+/* h3 안에 있는 이모지는 살짝 축소 */
 .sidebar h3::before {
-  content: "🌸";          /* 기본값(섹션별로 아래 nth로 바꿔줌) */
-  font-size: 13px;
-  transform: translateY(-1px);
+  content: "🌸"; /* 기본값 (아래 nth로 교체) */
+  font-size: 14px;
+  margin-right: 6px;
+  line-height: 1;
   opacity: .9;
 }
 
@@ -271,13 +275,15 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar h3 + ul {
   background: #fff;
   border: 1px solid var(--cute-line);
-  border-radius: 14px;
-  padding: 8px 10px;
+  border-radius: 12px;
+  padding: 8px 12px;
   margin: 6px 0 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* 리스트 기본: 불릿 제거 후 귀여운 포인트 */
+/* 리스트 기본 */
 .sidebar ul {
   list-style: none;
   margin: 4px 0 6px 0;
@@ -288,16 +294,10 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin: 2px 0;
   padding-left: 16px;
 }
-.sidebar ul li::before {
-  content: "🐾";          /* 귀여운 불릿 */
-  position: absolute;
-  left: 0;
-  top: 0.1em;
-  font-size: 12px;
-  opacity: .8;
-}
+/* 기본 불릿 제거(귀여운 발바닥 사용 안 함) */
+.sidebar ul li::before { content: none !important; }
 
-/* 링크: 살짝 필칩 느낌의 호버 */
+/* 링크: 살짝 칩 느낌의 호버 */
 .sidebar ul li a {
   display: inline-block;
   text-decoration: none;
@@ -312,47 +312,50 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   text-decoration: none;
 }
 
-/* “종류별” 그리드(태그 칩처럼) */
-.sidebar .species-grid {
+/* 세부 중첩 리스트(본편/외전 등) 여백 */
+.sidebar ul ul { margin: 4px 0 4px 12px; }
+
+/* “종류별/성격별” 칩 그리드 — 동일 스타일 */
+.sidebar .species-grid,
+.sidebar .personality-grid{
   display: grid;
   grid-template-columns: repeat(2, minmax(0,1fr));
   gap: 4px 8px;
   margin: 6px 0;
   padding: 0;
+  list-style: none;
 }
-.sidebar .species-grid li {
-  padding-left: 0;           /* 기존 불릿 제거 */
+.sidebar .species-grid li,
+.sidebar .personality-grid li{
+  margin: 0;
+  padding-left: 0;
 }
-.sidebar .species-grid li::before {
-  content: none;
-}
-.sidebar .species-grid a {
+.sidebar .species-grid a,
+.sidebar .personality-grid a{
   display: block;
   text-align: center;
-  padding: 4px 8px;
+  padding: 6px 10px;
+  min-height: 30px;
+  line-height: 1.2;
   border-radius: 999px;
   background: var(--cute-blue);
   border: 1px solid #e6f5ff;
   box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset;
+  color: var(--cute-text);
+  text-decoration: none;
+  transition: background-color .16s ease, transform .12s ease, border-color .16s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.sidebar .species-grid a:hover {
+.sidebar .species-grid a:hover,
+.sidebar .personality-grid a:hover{
   background: #e8f7ff;
+  border-color: #bfe7ff;
+  transform: translateY(-1px);
 }
 
-/* 세부 중첩 리스트(남성/여성/본편/외전 등) 여백 살짝 좁게 */
-.sidebar ul ul {
-  margin: 4px 0 4px 12px;
-}
-
-/* 모바일에서 더 컴팩트하게 */
-@media (max-width: 768px) {
-  .sidebar { font-size: 12.5px; }
-  .sidebar h3 { font-size: 13.5px; padding: 4px 8px; }
-  .sidebar h3 + ul { padding: 6px 8px; border-radius: 12px; }
-  .sidebar .species-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px; }
-}
-
-/* 다크 모드(있다면) 살짝 대비 보정 */
+/* ---------- Dark Mode tweak ---------- */
 @media (prefers-color-scheme: dark) {
   .sidebar {
     --cute-text: #e9ecf1;
@@ -370,217 +373,53 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
     border-color: var(--cute-line);
     box-shadow: none;
   }
-  .sidebar .species-grid a {
+  .sidebar .species-grid a,
+  .sidebar .personality-grid a {
     background: var(--cute-blue);
     border-color: #2d3a4a;
   }
 }
 
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 900px){
+  .sidebar .species-grid,
+  .sidebar .personality-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (min-width: 900px){
+  .sidebar .species-grid,
+  .sidebar .personality-grid{
+    grid-template-columns: repeat(4, minmax(0,1fr));
+  }
+}
 
-/* 모바일 최적화 */
 @media (max-width: 768px) {
   .sidebar {
     font-size: 12.5px !important;
     line-height: 1.45 !important;
     padding: 6px !important;
+    --pill-w: 120px; --pill-h: 32px;
   }
-
   .sidebar h3 {
     font-size: 13px !important;
-    padding: 4px 8px !important;
     margin: 8px 0 4px !important;
   }
-
   .sidebar h3 + ul {
     padding: 6px 8px !important;
     border-radius: 10px !important;
   }
-
-  .sidebar .species-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 4px !important;
+  .sidebar .species-grid a,
+  .sidebar .personality-grid a{
+    padding: 5px 8px;
+    min-height: 28px;
+    font-size: 12.5px;
   }
 
-  .sidebar ul li a {
-    font-size: 12.5px !important;
-    padding: 2px 4px !important;
+  /* 모바일에서 검색창 폭 줄이기 (.search input로 타겟 변경) */
+  .site-header .search input{
+    max-width: 140px;
+    flex-shrink: 1;
   }
-}
-
-/* ===== [패치] 홈=집모양, 발바닥 제거, 정렬 보정 ===== */
-
-/* 0) 혹시 예전 규칙이 아이콘을 덮어쓰면 우선권 확보 */
-.sidebar * { box-sizing: border-box; }
-
-/* 1) 홈(HOME) 뱃지: 집 아이콘 붙이기
-   - HTML을 안 건드려도 동작하도록, 메뉴 맨 처음 <ul> 안의 h3만 집 아이콘 */
-.sidebar .menu > ul li h3::before {
-  content: "🏠";
-  margin-right: 6px;
-  font-size: 14px;
-}
-
-/* 2) 목록 앞 발바닥(또는 커스텀 불릿) 전부 제거 */
-.sidebar ul li::before { content: none !important; }
-
-/* 3) 불릿 제거했으니 좌측 들여쓰기 정리(겹침 방지) */
-.sidebar ul > li { padding-left: 0 !important; }
-.sidebar ul ul > li { padding-left: 12px !important; }
-.sidebar ul ul ul > li { padding-left: 12px !important; }
-
-/* 4) 링크는 깔끔하게—칩 느낌 유지 */
-.sidebar ul li a {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: var(--cute-text, #334);
-  transition: background-color .16s ease, transform .12s ease;
-}
-.sidebar ul li a:hover {
-  background: var(--cute-hover, #ffedf6);
-  transform: translateX(2px);
-}
-
-/* 5) species-grid(종류별 칩)는 기존 스타일 유지 */
-.sidebar .species-grid li { padding-left: 0 !important; }
-
-/* ===== [패치] 섹션 배지(홈/게임정보/...) 폭 통일 ===== */
-
-/* 1) 공통 변수: 배지 가로폭/높이 */
-.sidebar {
-  --pill-w: 140px;   /* 모든 배지의 동일 가로폭 */
-  --pill-h: 34px;    /* 높이(폰트에 맞춰 필요시 조정) */
-}
-
-/* 2) h3 자체를 '배지'로 만들기 (섹션 제목들) */
-.sidebar h3 {
-  display: inline-flex;
-  width: var(--pill-w);
-  height: var(--pill-h);
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border-radius: 999px;
-  padding: 0 12px;              /* 좌우 여백(텍스트 중심 정렬) */
-  white-space: nowrap;          /* 줄바꿈 금지 */
-  overflow: hidden;             /* 넘치면 숨김 */
-  text-overflow: ellipsis;      /* 너무 길면 … 처리 */
-  /* 기존의 파스텔 배경/보더가 있다면 그대로 유지됩니다.
-     없다면 예시로 한 줄 추가:
-     background: linear-gradient(0deg,#fff 0%,#fff 40%, #ffd9ec 100%);
-     border: 1px solid #f4e8f1;
-  */
-}
-
-/* 3) '홈'은 <h3> 안에 <a>가 있으므로, a도 배지처럼 보이게 */
-.sidebar .menu > ul li h3 > a {
-  display: inline-flex;
-  width: var(--pill-w);
-  height: var(--pill-h);
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border-radius: 999px;
-  padding: 0 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 4) 아이콘(::before)도 배지 안쪽에서 정렬되도록 */
-.sidebar h3::before,
-.sidebar .menu > ul li h3 > a::before {
-  margin-right: 4px;
-  font-size: 14px;
-  line-height: 1;
-}
-
-/* 5) '홈' 배지에 집 아이콘 */
-.sidebar .menu > ul li h3 > a::before {
-  content: "🏠";
-}
-
-/* 6) 모바일에서는 살짝 더 좁게 */
-@media (max-width: 768px) {
-  .sidebar { --pill-w: 120px; --pill-h: 32px; }
-}
-
-/* 1) 홈 아이콘 중복 제거 */
-.sidebar .menu > ul li h3 > a::before {
-  content: none !important;
-}
-
-/* 2) 배지/섹션 제목을 좌측정렬 + 크기 통일 */
-.sidebar h3,
-.sidebar .menu > ul li h3 > a {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;  /* 좌측정렬 */
-  gap: 6px;
-  width: 100%;                  /* 흰색 박스와 동일하게 꽉 채움 */
-  min-height: 36px;             /* 버튼 높이 일정 */
-  padding: 6px 12px;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
-/* 3) 아이콘(::before)도 좌측에만 표시되게 */
-.sidebar h3::before {
-  margin-right: 6px;
-  font-size: 14px;
-}
-
-/* 4) 흰색 컨테이너(ul) 폭 맞추기 */
-.sidebar h3 + ul {
-  width: 100%;
-  border-radius: 12px;
-  padding: 8px 12px;
-  box-sizing: border-box;
-}
-
-/* 모바일에서 검색창 폭 줄이기 */
-@media (max-width: 768px) {
-  .site-header .search-box {
-    max-width: 140px;  /* 원하는 크기로 조정 */
-    flex-shrink: 1;    /* 공간 부족하면 줄어들도록 */
-  }
-
-  /* 로고 텍스트는 줄바꿈 금지 */
-  .site-header .brand {
-    white-space: nowrap;
-  }
-}
-
-/* 성격별 버튼 그리드 */
-.personality-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2열 */
-  gap: 6px;
-  list-style: none;
-  margin: 6px 0 12px;
-  padding: 0;
-}
-
-.personality-grid li {
-  margin: 0;
-}
-
-.personality-grid a {
-  display: block;
-  text-align: center;
-  padding: 6px 8px;
-  font-size: 13px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background: #fafafa;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.personality-grid a:hover {
-  background: #e6f3ff; /* hover 시 파스텔 블루 */
-  border-color: #99ccee;
-  color: #0077cc;
+  .site-header .brand{ white-space: nowrap; }
 }
