@@ -567,8 +567,3 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   margin-left:8px;
 }
 
-/* (옵션) 그룹 라벨과 항목 사이 간격 약간 띄우기 */
-.sidebar .menu li:has(> ul){ margin-top:10px; }
-
-/* (옵션) 게임 목록 안쪽 UL의 위아래 여백 살짝 */
-.sidebar .game-list > li > ul{ margin:6px 0; }
