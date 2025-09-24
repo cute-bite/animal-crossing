@@ -272,8 +272,8 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
 .sidebar h3:nth-of-type(6)::before { content: "🏝️"; } /* 장소 & 시스템 */
 .sidebar h3:nth-of-type(7)::before { content: "🎉"; } /* 이벤트 & 시즌 */
 .sidebar h3:nth-of-type(8)::before { content: "🧩"; } /* 기타 요소 */
-.sidebar h3:nth-of-type(8)::before { content: "🎁"; } /* 굿즈 */
-.sidebar h3:nth-of-type(8)::before { content: "🌸"; } /* 마이페이지 */
+.sidebar h3:nth-of-type(9)::before { content: "🎁"; } /* 굿즈 */
+.sidebar h3:nth-of-type(10)::before { content: "🌸"; } /* 마이페이지 */
 
 /* 섹션 카드: h3 다음의 ul을 동글동글 카드로 */
 .sidebar h3 + ul {
