@@ -568,58 +568,64 @@ tr:nth-child(even){ background:rgba(42,160,106,.04); }
   body.menu-open{ overflow: hidden; }
 }
 
-/* Birthday widget (메인 카드) */
-.birthday-card { padding: 16px 16px 10px; }
-.birthday-card h2 { margin: 0 0 6px; }
-.birthday-sub { margin: 2px 0 10px; color: var(--muted); font-size: .95rem; }
-
-.birthday-today{
-  display:none;
-  margin: 6px 0 10px;
-  padding: 8px 10px;
+/* 생일 위젯 스타일 */
+.birthday-card { display:block; }
+.bd-today{
+  background: rgba(42,160,106,.08);
   border: 1px solid var(--border);
-  background: var(--surface);
   border-radius: 10px;
+  padding: 10px 12px;
+  margin: 4px 0 12px;
   font-weight: 600;
 }
-
-.birthday-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 8px;
-}
-@media (min-width: 820px){
-  .birthday-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
-}
-@media (min-width: 1120px){
-  .birthday-grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
-}
-
-.bd-item{
-  border: 1px solid var(--border);
-  background: #fff;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: var(--shadow);
-}
-.bd-item.is-today{
-  outline: 2px solid var(--accent);
-  background: rgba(42,160,106,.06);
-}
-.bd-date{ font-weight: 700; margin-bottom: 4px; color: var(--accent); }
-.bd-names{ line-height: 1.4; }
-
-.bd-empty{
-  grid-column: 1 / -1;
-  text-align: center;
-  color: var(--muted);
-  padding: 12px;
-  border: 1px dashed var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-}
-
-.birthday-footer{
+.bd-cal-header{
   display:flex; align-items:center; justify-content:center;
-  gap:10px; margin-top:12px;
+  gap:10px; margin: 6px 0 10px;
+}
+.bd-calendar{ width:100%; }
+.bd-cal-weekdays{
+  display:grid; grid-template-columns:repeat(7,1fr);
+  gap:4px; font-weight:700; color:var(--muted);
+  margin-bottom:6px;
+}
+.bd-cal-weekdays span{ text-align:center; }
+
+.bd-cal-body{
+  display:grid; grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+.bd-day{
+  background: var(--bg);
+  border:1px solid var(--border);
+  border-radius: 10px;
+  min-height: 84px;
+  padding: 6px;
+  display:flex; flex-direction:column; gap:6px;
+}
+.bd-day.is-other-month{ opacity:.45; }
+.bd-day .bd-date{
+  font-weight:700; font-size:.95em; color:var(--text);
+}
+.bd-day .bd-people{
+  margin-top:auto; display:flex; flex-direction:column; gap:2px;
+}
+.bd-pill{
+  display:block; width:100%; text-align:center;
+  padding:4px 6px; border-radius:999px;
+  background: var(--cute-blue, #cfeeff);
+  border:1px solid #e6f5ff;
+  font-size:.9em; color:var(--cute-text, #334);
+  text-decoration:none;
+}
+.bd-pill:hover{ background:#e8f7ff; border-color:#bfe7ff; }
+
+.bd-day.is-today{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  background:var(--surface);
+}
+
+/* 작을 때 칸 키워드/줄바꿈 보정 */
+@media (max-width: 680px){
+  .bd-day{ min-height: 96px; }
 }
